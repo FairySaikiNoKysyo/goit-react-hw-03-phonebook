@@ -15,6 +15,24 @@ export class App extends Component {
     ],
     filter: '',
   };
+
+componentDidUpdate(prevState){
+  if(prevState.contacts !== this.state.contacts){
+    localStorage.setItem('saved-contacts',JSON.stringify(this.state.contacts))
+  }
+}
+componentDidMount(){
+  const savedContacts = localStorage.getItem('saved-contacts');
+  if(savedContacts !== null){
+    this.setState({
+contacts: JSON.parse(savedContacts)
+    })
+  } 
+}
+
+
+
+
   deleteContact = id => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
